@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name dribbble.woaiso.com;
+  server_name admin.woaiso.com;
   location / {
         root /data/www/admin;
         # 用于配合 browserHistory使用
