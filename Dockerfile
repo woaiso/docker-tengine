@@ -7,7 +7,7 @@ LABEL MAINTAINER = "小富 <woaiso@woaiso.com>"
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 #Declare tengine version environment variable
-ENV TENGINE_VERSION=2.3.0
+ENV TENGINE_VERSION=2.3.2
 # 使用阿里云的apt镜像
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb http://mirrors.aliyun.com/debian stretch main contrib non-free" >/etc/apt/sources.list && \
@@ -46,7 +46,7 @@ RUN ./configure \
     --conf-path=/etc/nginx/nginx.conf \
     --sbin-path=/usr/bin/nginx \
     --user=nginx_http_user \
-    --group=nginx_http_user && \
+    --group=nginx_http_group && \
     make && \
     make install && \
     # echo "\ndaemon off;">>/etc/nginx/nginx.conf && \
@@ -55,16 +55,18 @@ RUN ./configure \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #WORKDIR /etc/nginx/sbin/
-ADD ./etc/nginx/nginx.conf /etc/nginx/
-# ADD Nginx site config and wwwroot
-RUN mkdir -p /data/www /data/sites_conf /data/ssl && \
-    chmod -R +x /data/www /data/sites_conf /data/ssl && \
-    chown -R nginx_http_user /data/www /data/sites_conf /data/ssl
+COPY ./etc/nginx/nginx.conf /etc/nginx/
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN ln -s /usr/local/bin/docker-entrypoint.sh / # backwards compat
 
-COPY data/ /data/
+# ADD Nginx site config and wwwroot
+RUN mkdir -p /data/www /data/logs  && \
+    chmod -R +x /data/www /data/logs && \
+    chown -R nginx_http_user /data/www /data/logs
 
 EXPOSE 80 443
 
-VOLUME ["/data"]
+VOLUME ["/data", "/etc/nginx/sites-enabled", "/etc/nginx/key"]
 
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["nginx"]
