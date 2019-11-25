@@ -57,16 +57,15 @@ RUN ./configure \
 #WORKDIR /etc/nginx/sbin/
 COPY ./etc/nginx/nginx.conf /etc/nginx/
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s /usr/local/bin/docker-entrypoint.sh / # backwards compat
-
+RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 # ADD Nginx site config and wwwroot
 RUN mkdir -p /data/www /data/logs  && \
     chmod -R +x /data/www /data/logs && \
-    chown -R nginx_http_user /data/www /data/logs
-
-EXPOSE 80 443
+    chown -R nginx_http_user /data/www /data/logs && \
+    chmod +x /usr/local/bin/docker-entrypoint.sh
 
 VOLUME ["/data", "/etc/nginx/sites-enabled", "/etc/nginx/key"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["nginx"]
+EXPOSE 80 443
+CMD ["nginx", "-g", "daemon off;"]
