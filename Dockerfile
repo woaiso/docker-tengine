@@ -67,8 +67,5 @@ RUN mkdir -p /data/www /data/logs  && \
 VOLUME ["/data", "/etc/nginx/sites-enabled", "/etc/nginx/key"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-EXPOSE 80/tcp
-EXPOSE 80/udp
-EXPOSE 443/tcp
-EXPOSE 443/udp
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
