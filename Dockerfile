@@ -2,6 +2,8 @@
 
 # Pull Base image.
 FROM debian:jessie
+LABEL Name="docker-tengine"
+LABEL Version = "2.0.0"
 LABEL MAINTAINER = "小富 <woaiso@woaiso.com>"
 
 # Let the conatiner know that there is no tty
