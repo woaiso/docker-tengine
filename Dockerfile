@@ -24,13 +24,13 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
 #Install basic requirements
 RUN apt-get update -y && \
     apt-get install -y apt-utils wget gcc libssl-dev libpcre3-dev zlib1g-dev curl vim make && \
+    apt-get clean && \
     #Create nginx_http_user for nginx
     adduser \
     --disabled-login \
     --no-create-home \
     --gecos 'Tengine_Http_User' \
     nginx_http_user
-
 
 WORKDIR /tmp/
 #Download tengine and 
