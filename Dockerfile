@@ -3,7 +3,7 @@
 # Pull Base image.
 FROM debian:jessie
 LABEL Name="docker-tengine"
-LABEL Version = "2.0.0"
+LABEL Version = "2.0.3"
 LABEL MAINTAINER = "小富 <woaiso@woaiso.com>"
 
 # Let the conatiner know that there is no tty
@@ -21,10 +21,10 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib" >>/etc/apt/sources.list && \
     echo "deb-src http://mirrors.aliyun.com/debian-security/ stretch/updates main non-free contrib" >>/etc/apt/sources.list
 
+
 #Install basic requirements
 RUN apt-get update -y && \
     apt-get install -y apt-utils wget gcc libssl-dev libpcre3-dev zlib1g-dev curl vim make && \
-    apt-get clean && \
     #Create nginx_http_user for nginx
     adduser \
     --disabled-login \
@@ -33,7 +33,7 @@ RUN apt-get update -y && \
     nginx_http_user
 
 WORKDIR /tmp/
-#Download tengine and 
+#Download tengine and install
 RUN wget http://tengine.taobao.org/download/tengine-$TENGINE_VERSION.tar.gz && \
     tar zxvf tengine-$TENGINE_VERSION.tar.gz && \
     rm tengine-$TENGINE_VERSION.tar.gz
