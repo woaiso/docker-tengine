@@ -3,7 +3,7 @@
 # Pull Base image.
 FROM debian:jessie
 LABEL Name="docker-tengine"
-LABEL Version = "2.0.3"
+LABEL Version = "2.0.4"
 LABEL MAINTAINER = "小富 <woaiso@woaiso.com>"
 
 # Let the conatiner know that there is no tty
@@ -45,6 +45,7 @@ RUN ./configure \
     --prefix=/etc/nginx \
     --with-http_ssl_module  \
     --with-http_v2_module  \
+    --with-http_stub_status_module \
     --conf-path=/etc/nginx/nginx.conf \
     --sbin-path=/usr/bin/nginx \
     --user=nginx_http_user \
