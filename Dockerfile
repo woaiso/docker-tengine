@@ -137,7 +137,9 @@ RUN addgroup -S nginx \
 WORKDIR /home/alpine
 COPY ./etc/nginx/nginx.conf /etc/nginx/
 COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    mkdir -p /data && \
+    chown -R nginx /data
 VOLUME ["/data", "/etc/nginx/sites-enabled", "/etc/nginx/key"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
