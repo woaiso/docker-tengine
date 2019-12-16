@@ -26,6 +26,7 @@ ENV CONFIG "\
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --user=nginx \
         --group=nginx \
+        --with-syslog \
         --with-http_ssl_module \
         --with-http_realip_module \
         --with-http_addition_module \
@@ -61,6 +62,7 @@ ENV CONFIG "\
 RUN addgroup -S nginx \
     && adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
     && addgroup -g 82 -S www-data && adduser -u 82 -D -S -G www-data www-data \
+    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
     && apk add --no-cache --virtual .build-deps \
             gcc \
             libc-dev \
