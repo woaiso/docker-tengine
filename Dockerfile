@@ -93,11 +93,10 @@ RUN addgroup -S nginx \
     && ./configure $CONFIG \
     && make -j$(getconf _NPROCESSORS_ONLN) \
     && make install \
-    && rm -rf /etc/nginx/html/ \
     && mkdir /etc/nginx/conf.d/ \
-    && mkdir -p /usr/share/nginx/html/default/ \
-    && install -m644 html/index.html /usr/share/nginx/html/default/ \
-    && install -m644 html/50x.html /usr/share/nginx/html/default/ \
+    && mkdir -p /etc/nginx/html/ \
+    && install -m644 html/index.html /etc/nginx/html/ \
+    && install -m644 html/50x.html /etc/nginx/html/ \
     && install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
     && install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
     && install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
