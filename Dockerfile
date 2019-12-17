@@ -26,7 +26,6 @@ ENV CONFIG "\
         --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
         --user=nginx \
         --group=nginx \
-        --with-syslog \
         --with-http_ssl_module \
         --with-http_realip_module \
         --with-http_addition_module \
@@ -75,7 +74,7 @@ RUN addgroup -S nginx \
             libxslt-dev \
             gd-dev \
             geoip-dev \
-    && curl -L "https://github.com/alibaba/tengine/archive/$TENGINE_VERSION.tar.gz" -o tengine.tar.gz \
+    && curl -L "http://tengine.taobao.org/download/tengine-$TENGINE_VERSION.tar.gz" -o tengine.tar.gz \
     && mkdir -p /usr/src \
     && tar -zxC /usr/src -f tengine.tar.gz \
     && rm tengine.tar.gz \
@@ -96,9 +95,9 @@ RUN addgroup -S nginx \
     && make install \
     && rm -rf /etc/nginx/html/ \
     && mkdir /etc/nginx/conf.d/ \
-    && mkdir -p /usr/share/nginx/html/ \
-    && install -m644 html/index.html /usr/share/nginx/html/ \
-    && install -m644 html/50x.html /usr/share/nginx/html/ \
+    && mkdir -p /usr/share/nginx/html/default/ \
+    && install -m644 html/index.html /usr/share/nginx/html/default/ \
+    && install -m644 html/50x.html /usr/share/nginx/html/default/ \
     && install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
     && install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
     && install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
