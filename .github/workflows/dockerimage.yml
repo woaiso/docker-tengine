@@ -17,3 +17,5 @@ jobs:
       run: |
         docker login -u ${{secrets.DOCKERHUB_USER}} -p ${{secrets.DOCKERHUB_TOKEN}}
         docker build . --file Dockerfile --tag woaiso/docker-tengine:latest
+        docker push woaiso/docker-tengine:latest
+        docker logout
