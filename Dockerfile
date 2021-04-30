@@ -3,7 +3,7 @@
 # Pull Base image.
 FROM alpine:3.10.3
 LABEL Name="docker-tengine"
-LABEL Version = "2.0.4"
+LABEL Version = "2.3.3"
 LABEL MAINTAINER = "小富 <woaiso@woaiso.com>"
 
 #Declare tengine version environment variable
